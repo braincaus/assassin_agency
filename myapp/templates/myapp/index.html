@@ -1,0 +1,38 @@
+{% extends 'myapp/main_2.html' %}
+{% block title %}Index{% endblock %}
+
+
+{% block content %}
+    <h1>Hits</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Hitman</th>
+      <th scope="col">Target</th>
+      <th scope="col">
+          {% if request.user.is_superuser or request.user.hitman.is_manager %}
+              <a href="/hit/new/">New</a>
+          {% endif %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  {% if hits %}
+      {% for hit in hits %}
+        <tr>
+            <th scope="row">{{ hit.id }}</th>
+            <td>{{ hit.hitman }}</td>
+            <td>{{ hit.target }}</td>
+            <td><a href="/hit/{{ hit.id }}">Detail</a></td>
+        </tr>
+      {% endfor %}
+  {% else %}
+    <tr>
+        <td colspan="4">No data</td>
+    </tr>
+  {% endif %}
+  </tbody>
+</table>
+{% endblock %}

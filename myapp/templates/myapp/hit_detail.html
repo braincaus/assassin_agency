@@ -1,0 +1,49 @@
+{% extends 'myapp/main_2.html' %}
+{% block title %}Hit Detail{% endblock %}
+
+
+{% block content %}
+    <h1>Hit Detail</h1>
+    <form method="post" action="/hit/{{ hit.id }}/">
+    {% csrf_token %}
+      <div class="mb-3">
+        <label for="hitman" class="form-label">Hitman</label>
+        <select id="hitman" name="hitman" class="form-select" {% if not edit %}disabled{% endif %}>
+          <option disabled>Select a hitman</option>
+            {% for hitman in hitmen %}
+            <option
+                value="{{ hitman.id }}"
+                {% if hitman == hit.hitman %}selected{% endif %} >
+                {{ hitman }}
+            </option>
+            {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="target" class="form-label">Target</label>
+        <input type="text" class="form-control" id="target" name="target" value="{{ hit.target }}" disabled>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" id="description" name="description" value="{{ hit.description }}" disabled>
+      </div>
+
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+            {% for stat in status %}
+            <option
+                value="{{ stat.id }}"
+                {% if stat == hit.status %}selected{% endif %}>
+                {{ stat }}
+            </option>
+            {% endfor %}
+        </select>
+      </div>
+
+      <input type="submit" class="btn btn-primary" value="Send" />
+    </form>
+
+{% endblock %}

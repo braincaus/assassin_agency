@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/code
+    environment:
+      - SECRET_KEY='django-insecure-)8@3_@63xolkrf==s+4)(#y-n^ico_7=f#8q-x&49*k8sbw2r3'
+      - DEBUG=True
+      - POSTGRES_SERVER=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=assassin_agency
+    depends_on:
+      - db
+
+  db:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=assassin_agency

@@ -1,0 +1,27 @@
+{% extends 'myapp/main_2.html' %}
+{% block title %}Hitman Detail{% endblock %}
+
+
+{% block content %}
+    <h1>Hitman Detail</h1>
+    <form method="post" action="/hitmen/{{ hitman.id }}/">
+    {% csrf_token %}
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ hitman.user.first_name }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" value="{{ hitman.user.username }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <input type="checkbox" id="status" name="status" {% if hitman.active %} checked="checked" {% endif %}>
+      </div>
+
+      <input type="submit" class="btn btn-primary" value="Send" />
+    </form>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'myapp/main_2.html' %}
+{% block title %}New Hit{% endblock %}
+
+
+{% block content %}
+    <h1>New Hit</h1>
+
+    <form method="post" action="/hit/new/">
+    {% csrf_token %}
+      <div class="mb-3">
+        <label for="hitman" class="form-label">Hitman</label>
+        <select id="hitman" name="hitman" class="form-select">
+          <option disabled>Select a hitman</option>
+            {% for hitman in hitmen %}
+            <option value="{{ hitman.id }}">{{ hitman }}</option>
+            {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="target" class="form-label">Target</label>
+        <input type="text" class="form-control" id="target" name="target">
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" id="description" name="description" value="{{ hit.description }}">
+      </div>
+
+      <input type="submit" class="btn btn-primary" value="Send" />
+    </form>
+
+{% endblock %}
